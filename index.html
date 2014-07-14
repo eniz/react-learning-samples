@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Product Table with React</title>
-
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body>
 <div id="main-content"></div>
@@ -45,7 +45,7 @@
                 lastCategory = product.category;
             });
             return (
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -74,5 +74,6 @@
 </script>
 <script src="bower_components/react/react.min.js"></script>
 <script src="bower_components/react/JSXTransformer.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
 </body>
 </html>
