@@ -1,10 +1,7 @@
-<!-- template.html -->
 <html>
 <head>
     <title>Product Table with React</title>
-    <script src="http://fb.me/react-0.10.0.js"></script>
-    <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+
 </head>
 <body>
 <div id="main-content"></div>
@@ -15,7 +12,7 @@
         render: function (){
             return (
                 <tr>
-                    <th colspan="2">{this.props.category}</th>
+                    <th colSpan="2">{this.props.category}</th>
                 </tr>
             );
         }
@@ -74,10 +71,8 @@
         <ProductTable products={PRODUCTS} />,
         document.getElementById('main-content')
       );
-
-
-
-
 </script>
+<script src="bower_components/react/react.min.js"></script>
+<script src="bower_components/react/JSXTransformer.js"></script>
 </body>
 </html>

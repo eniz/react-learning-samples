@@ -1,0 +1,18 @@
+{
+    "name": "react-example",
+    "authors": [
+        "Eniz Gülek <enizgulek@gmail.com>"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "react": "~0.10.0"
+    }
+}
