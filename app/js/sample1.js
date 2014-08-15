@@ -4,25 +4,59 @@
 // As changes occur, React diffs changes between these two Virtual DOM trees and streams them to the real DOM.
 // Sending the minimal amount of changes saves a lot of time, as modifying and querying the actual DOM is a huge performance bottleneck.
 
+var Avatar = React.createClass({
+    getInitialState: function () {
+        return {
+            profilePic: ''
+        }
+    },
+    componentDidMount: function () {
+        $.get('http://graph.facebook.com/' + this.props.username + '/picture?redirect=0&height=168&width=168', function (result) {
+            if (this.isMounted()) {
+                this.setState({
+                    profilePic: result.data.url
+                });
+            }
+        }.bind(this));
+    },
+
+    render: function () {
+        return (
+            <img src={this.state.profilePic}  className="img-circle"/>
+            );
+    }
+});
+
 var PageTitle = React.createClass({
     getInitialState : function() {
         return {
             name : "eniz",
             job  : "developer",
-            avatarUrl: "https://avatars.githubusercontent.com/u/1782708?v=2"
+            city: 'Istanbul, Turkey',
+            twitterUrl: "https://twitter.com/enzglk"
         };
     },
     render : function() {
         return (
             <h1>
-            <img src={this.state.avatarUrl} width="200" height="200" className="img-circle"/>
-            My name is <b>{this.state.name}</b> and I am a <b>{this.state.job}</b>.
+                <Avatar username="enzglk" />
+            My name is
+                <b>
+                    <a href={this.state.twitterUrl}>{this.state.name}</a>
+                </b>
+            and I am a
+                <b>{this.state.job}</b>
+            .
+                <br/>
+            I live in
+                <b>{this.state.city}</b>
+            .
             </h1>
             );
     }
 });
 
-var UserGist = React.createClass({
+var UserGithub = React.createClass({
     getInitialState: function() {
         return {
             username: 'enzglk',
@@ -48,7 +82,7 @@ var UserGist = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div className="panel">
                 My last github repo name is <b>{this.state.lastRepoName}</b> and link is <b><a href={this.state.lastRepoUrl}>here</a></b>.
                 <p>It is about <b>{this.state.repoDescription}</b>.</p>
             </div>
@@ -69,12 +103,32 @@ var Button = React.createClass({
    }
 });
 
+var LikeButton = React.createClass({
+    getInitialState: function () {
+        return { liked: false };
+    },
+    handleClick: function (event) {
+        this.setState({liked: !this.state.liked});
+    },
+    render: function () {
+        var text = this.state.liked ? 'like' : 'unlike';
+        return (
+            <p onClick={this.handleClick}>You
+                <b>{text}</b>
+            this. Click to toggle.</p>
+            );
+    }
+});
+
 var App = React.createClass({
    render: function () {
        return (
-         <div>
+           <div className="main-container">
              <PageTitle />
-             <UserGist source="https://api.github.com/users/enzglk/repos?sort=created" />
+               <UserGithub source="https://api.github.com/users/enzglk/repos?sort=created" />
+               <h2>UI Kits </h2>
+               <Button text="Button" />
+               <LikeButton />
          </div>
        );
    }
