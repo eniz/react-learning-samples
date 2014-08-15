@@ -12,9 +12,15 @@ var PageTitle = React.createClass({
         };
     },
     render : function() {
-        return <h1>
-        My name is <b>{this.state.name}</b> and I am a <b>{this.state.job}</b>.
-        </h1>;
+        return (
+            <h1>
+            My name is
+                <b>{this.state.name}</b>
+            and I am a
+                <b>{this.state.job}</b>
+            .
+            </h1>
+            );
     }
 });
 
