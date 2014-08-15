@@ -8,22 +8,53 @@ var PageTitle = React.createClass({
     getInitialState : function() {
         return {
             name : "eniz",
-            job  : "developer"
+            job  : "developer",
+            avatarUrl: "https://avatars.githubusercontent.com/u/1782708?v=2"
         };
     },
     render : function() {
         return (
             <h1>
-            My name is
-                <b>{this.state.name}</b>
-            and I am a
-                <b>{this.state.job}</b>
-            .
+            <img src={this.state.avatarUrl} width="200" height="200" className="img-circle"/>
+            My name is <b>{this.state.name}</b> and I am a <b>{this.state.job}</b>.
             </h1>
             );
     }
 });
 
+var UserGist = React.createClass({
+    getInitialState: function() {
+        return {
+            username: 'enzglk',
+            lastRepoName: '',
+            lastRepoUrl: '',
+            repoDescription: ''
+        };
+    },
+
+    componentDidMount: function() {
+        $.get(this.props.source, function(result) {
+            var lastRepo = result[0];
+            if (this.isMounted()) {
+                this.setState({
+                    username: lastRepo.owner.login,
+                    lastRepoName: lastRepo.name,
+                    lastRepoUrl: lastRepo.html_url,
+                    repoDescription: lastRepo.description
+                });
+            }
+        }.bind(this));
+    },
+
+    render: function() {
+        return (
+            <div>
+                My last github repo name is <b>{this.state.lastRepoName}</b> and link is <b><a href={this.state.lastRepoUrl}>here</a></b>.
+                <p>It is about <b>{this.state.repoDescription}</b>.</p>
+            </div>
+            );
+    }
+});
 
 var Button = React.createClass({
     actionButton: function () {
@@ -43,7 +74,7 @@ var App = React.createClass({
        return (
          <div>
              <PageTitle />
-             <Button text="Button" />
+             <UserGist source="https://api.github.com/users/enzglk/repos?sort=created" />
          </div>
        );
    }
